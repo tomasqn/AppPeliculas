@@ -84,29 +84,35 @@ class _PosterAndTitle extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
-                placeholder: const AssetImage('assets/no-image.jpg'), 
+                placeholder: const AssetImage('assets/no-image.jpg', ), 
                 image: NetworkImage(movie.fullPosterPath),
                 height: 150,
+                width: 100,
+                fit: BoxFit.contain,
                 )
             ),
           ),
 
           const SizedBox(width: 20,),
 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(movie.title, style: textTheme.subtitle1, overflow: TextOverflow.ellipsis, maxLines: 2,),
-              Text(movie.originalTitle, style: textTheme.subtitle2, overflow: TextOverflow.ellipsis, maxLines: 1,),
-
-              Row(
-                children: [
-                  const Icon(Icons.star_border_outlined, size: 15, color: Colors.yellow,),
-                  const SizedBox(width: 5),
-                  Text('${movie.voteAverage}', style: textTheme.caption,)
-                ],
-              )
-            ],
+          SizedBox(
+            width: 230,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(movie.title, style: textTheme.subtitle1, overflow: TextOverflow.ellipsis, maxLines: 2, ),
+                Text('Release: ${movie.releaseDate!}', style: textTheme.subtitle2, overflow: TextOverflow.ellipsis, maxLines: 1,),
+                Text(movie.originalTitle, style: textTheme.subtitle2, overflow: TextOverflow.ellipsis, maxLines: 2,),
+          
+                Row(
+                  children: [
+                    const Icon(Icons.star_border_outlined, size: 15, color: Colors.yellow,),
+                    const SizedBox(width: 5),
+                    Text('${movie.voteAverage}', style: textTheme.caption,)
+                  ],
+                )
+              ],
+            ),
           )
         ],
       )
