@@ -1,0 +1,1 @@
+export 'package:diseno_1/screens/basic_design.dart';
