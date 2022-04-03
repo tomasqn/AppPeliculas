@@ -15,6 +15,8 @@ class HomeScreen extends StatelessWidget {
 
     final nowPlayingProvider = Provider.of<MoviesProvider>(context);
     final popularProvider = Provider.of<MoviesProvider>(context);
+    final topRatedProvider = Provider.of<MoviesProvider>(context);
+    final upcomingProvider = Provider.of<MoviesProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -36,8 +38,19 @@ class HomeScreen extends StatelessWidget {
             CardSwiper(movies: nowPlayingProvider.onDisplayMovies),
             MovieSlider(
               movies: popularProvider.popularMovies, 
-              title: 'Populares', 
-              onNextPage: () => popularProvider.getPopularMovies(),)
+              title: 'Popular', 
+              onNextPage: () => popularProvider.getPopularMovies(),
+              ),
+              MovieSlider(
+              movies: topRatedProvider.topRatedMovies, 
+              title: 'Top Rated', 
+              onNextPage: () => topRatedProvider.getTopRatedMovies(),
+              ),
+              MovieSlider(
+              movies: upcomingProvider.upcomingMovies, 
+              title: 'Upcoming', 
+              onNextPage: () => upcomingProvider.getUpcomingMovies(),
+              )
           ],
         ),
       )

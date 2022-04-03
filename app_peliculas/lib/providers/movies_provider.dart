@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app_peliculas/helpers/debouncer.dart';
 import 'package:app_peliculas/models/models.dart';
+import 'package:app_peliculas/models/upcoming_response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,10 +14,14 @@ class MoviesProvider extends ChangeNotifier {
 
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
+  List<Movie> topRatedMovies = [];
+  List<Movie> upcomingMovies = [];
 
   Map<int, List<Cast>> movieCast = {};
 
   int _popularPage = 0;
+  int _topRatedPage = 0;
+  int _upcomingPage = 0;
 
   final debouncer = Debouncer(
     duration: const Duration(milliseconds: 500)
@@ -28,6 +33,8 @@ class MoviesProvider extends ChangeNotifier {
   MoviesProvider(){
     getNowPlayingMovies();
     getPopularMovies();
+    getTopRatedMovies();
+    getUpcomingMovies();
   }
 
   Future<String> _getJsonData(String endpoint, [int page = 1]) async{
@@ -58,6 +65,28 @@ class MoviesProvider extends ChangeNotifier {
     final popularResponse = PopularClass.fromJson(jsonData);
 
     popularMovies = [...popularMovies, ...popularResponse.results];
+    notifyListeners();
+  }
+
+  getTopRatedMovies() async {
+
+    _topRatedPage++;
+
+    final jsonData = await _getJsonData('3/movie/top_rated', _topRatedPage);
+    final topRatedResponse = TopRatedClass.fromJson(jsonData);
+
+    topRatedMovies = [...topRatedMovies, ...topRatedResponse.results];
+    notifyListeners();
+  }
+
+  getUpcomingMovies() async {
+
+    _upcomingPage++;
+
+    final jsonData = await _getJsonData('3/movie/upcoming', _upcomingPage);
+    final upcomingResponse = UpcomingClass.fromJson(jsonData);
+
+    upcomingMovies = [...upcomingMovies, ...upcomingResponse.results];
     notifyListeners();
   }
 
